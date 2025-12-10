@@ -29,6 +29,10 @@
 
 html,
 body {
+     user-select: none; /* برای مرورگرهای مدرن */
+  -webkit-user-select: none; /* برای Safari و Chrome */
+  -moz-user-select: none; /* برای Firefox */
+  -ms-user-select: none; /* برای IE/Edge قدیمی */
   width: 100%;
   min-height: 100vh;
   font-family: var(--font-base);
