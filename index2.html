@@ -636,15 +636,7 @@
 
         animateParticles();
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-        // بررسی وضعیت ثبت‌نام کاربر
-        if (!localStorage.getItem('isRegistered')) {
-            // اگر ثبت‌نام نکرده بود، هدایت به صفحه ثبت‌نام
-            window.location.href = 'register.html';
-        }
+ 
     </script>
   <script>
     // اسکریپت باز و بسته شدن منوی موبایل
@@ -656,5 +648,6 @@
     });
   </script>
 </body>
+
 
 </html>
