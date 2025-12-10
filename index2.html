@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام‌یار - سامانه دفتر انضباطی هوشمند</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30/dist/font-face.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Vazir, sans-serif;
+            background: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* لودینگ با سه نقطه */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #aeafb4c4;
+            color: #000000;
+            font-size: 24px;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        #loader img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background: #1900ff;
+            border-radius: 50%;
+            animation: dotBounce 1.5s infinite;
+        }
+
+        .dots span:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .dots span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes dotBounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* هدر */
+        header {
+            background: #fff;
+            padding: 15px 50px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid #4a6cf7;
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #fff;
+            background: #4a6cf7;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            background: linear-gradient(135deg, #4a6cf7, #6ec1e4);
+            overflow: hidden;
+        }
+
+        #heroParticles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero h1,
+        .hero p,
+        .hero button {
+            position: relative;
+            z-index: 1;
+            /* متن بالای ذرات */
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 22px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 1s;
+        }
+
+        .hero button {
+            padding: 15px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 12px;
+            background: #fff;
+            color: #4a6cf7;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 1.5s;
+        }
+
+        .hero button:hover {
+            background: #e0e6ff;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features - کاروسل */
+        .features-container {
+            padding: 100px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features {
+            display: flex;
+            gap: 25px;
+            transition: transform 0.5s ease;
+        }
+
+        .card {
+            min-width: 280px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #4a6cf7;
+        }
+
+        .card p {
+            font-size: 17px;
+            color: #555;
+        }
+
+        .feature-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .feature-nav button {
+            background: #4a6cf7;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .feature-nav button:hover {
+            opacity: 1;
+        }
+
+        /* About */
+        .about {
+            padding: 100px 50px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #2d3e8b;
+        }
+
+        .about p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        /* کاروسل متنی */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            max-width: 100%;
+            padding: 50px 20px;
+            background: #f0f4ff;
+        }
+
+        .text-carousel {
+            position: relative;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #f0f4ff;
+            margin: 50px 20px;
+            border-radius: 20px;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(50px);
+            font-size: 20px;
+            font-weight: 600;
+            color: #4a6cf7;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            gap: 25px;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 300px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .slider-nav button {
+            background: #4a6cf7;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            pointer-events: all;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .slider-nav button:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                min-width: 250px;
+                font-size: 16px;
+            }
+        }
+
+
+        /* Footer */
+        footer {
+            background: #2d3e8b;
+            color: #fff;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            color: #e0e6ff;
+        }
+
+        @media(max-width:768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            nav ul li{
+                font-size: 10px;
+                display: inline-block;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .features {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .feature-nav {
+                display: none;
+            }
+        }
+        /* ===== منوی موبایل ===== */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  direction: ltr;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: rgb(255, 187, 0);
+  text-align: center;
+}
+
+.mobile-menu a {
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.mobile-menu a:hover {
+  background-color: #0b7be4;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+/* ===== واکنش‌گرا ===== */
+@media (max-width: 768px) {
+  .nav-links, .auth-buttons {
+    display: none;
+  }
+  nav {
+    display: none;
+  }
+  .header h1 {
+    font-size: 20px;
+    position: relative;
+    top: 23px;
+  }
+  .menu-toggle {
+    display: inline-block;
+    position: relative;
+   
+    left: 5px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="loader">
+        <img src="logo.png" alt="لوگو نظام‌یار">
+        <div class="dots">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <img src="logo.png" alt="لوگو نظام‌یار">
+        <nav>
+            <ul>
+                <li><a href="./index.html">خانه</a></li>
+                <li><a href="./panel.html">پلن ها</a></li>
+                <li><a href="./panelka.html">پنل کاربری</a></li>
+                <li><a href="#about">درباره ما</a></li>
+                <li><a href="#contact">تماس با ما</a></li>
+            </ul>
+        </nav>
+
+                <!-- دکمه منو برای موبایل -->
+                <div class="menu-toggle" id="menu-toggle">
+                    ☰
+                  </div>
+                </header>
+              
+                <!-- منوی موبایل -->
+              
+                <div class="mobile-menu" id="mobile-menu">
+                    <a href="./index.html">خانه</a>
+                    <a href="./panel.html">پلن ها</a>
+                    <a href="./panelka.html">پنل کاربری</a>
+                    <a href="#about">درباره ما</a>
+                    <a href="#contact">تماس با ما</a>
+                </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <canvas id="heroParticles"></canvas>
+
+        <h1>نظام‌یار - دفتر انضباطی هوشمند</h1>
+        <p>سیستمی مدرن برای مدیریت انضباط، تشویق دیجیتالی و گزارش لحظه‌ای والدین.</p>
+        <button>شروع کنید</button>
+    </section>
+
+    <!-- Features Carousel -->
+    <section class="features-container" id="features">
+        <div class="features">
+            <div class="card">
+                <h3>ثبت رویدادهای انضباطی</h3>
+                <p>ثبت سریع و دقیق هر رویداد انضباطی با امکان اضافه کردن توضیحات و تصاویر.</p>
+            </div>
+            <div class="card">
+                <h3>تحلیل رفتار دانش‌آموز</h3>
+                <p>گزارشات تحلیلی و نمودارهای آماری برای پیگیری رفتار دانش‌آموزان.</p>
+            </div>
+            <div class="card">
+                <h3>سیستم تشویق و امتیاز</h3>
+                <p>افزایش انگیزه با Gamification و تبدیل رفتارهای مثبت به پاداش دیجیتال.</p>
+            </div>
+            <div class="card">
+                <h3>گزارش لحظه‌ای والدین</h3>
+                <p>والدین می‌توانند به صورت آنلاین رفتارهای فرزند خود را مشاهده و پیگیری کنند.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <h2>چرا نظام‌یار؟</h2>
+        <p>نظام‌یار با هدف افزایش نظم و انضباط دانش‌آموزان و ایجاد انگیزه در مدارس طراحی شده است.</p>
+        <p>سیستم ما انعطاف‌پذیر بوده و می‌تواند با توجه به نیاز مدرسه سفارشی شود.</p>
+    </section>
+
+    <!-- Slider -->
+    <!-- Text Carousel -->
+    <section class="text-carousel">
+        <div class="carousel-slide active">امکان تعریف قوانین و رویدادهای سفارشی</div>
+        <div class="carousel-slide">سیستم امتیازدهی برای هر نوع رفتار</div>
+        <div class="carousel-slide">گزارش‌گیری روزانه، هفتگی و ماهانه</div>
+        <div class="carousel-slide">اعلان‌های فوری برای والدین و دانش‌آموزان</div>
+        <div class="carousel-slide">داشبورد مدیریتی با نمودارهای تحلیلی</div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>© 2025 نظام‌یار. تمامی حقوق محفوظ است.</p>
+        <p>تماس با ما: <a href="mailto:info@nizamyar.com">info@nizamyar.com</a></p>
+    </footer>
+
+    <script>
+        // Loader
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
+        }, 5000);
+        const slides = document.querySelectorAll('.carousel-slide');
+        let current = 0;
+
+        function showNextSlide() {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }
+
+        // هر 3 ثانیه متن بعدی نمایش داده شود
+        setInterval(showNextSlide, 3000);
+        const canvas = document.getElementById('heroParticles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const particleCount = 80;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1,
+                angle: Math.random() * 2 * Math.PI,
+                speed: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                // حرکت موجی ذرات
+                p.x += Math.cos(p.angle) * p.speed;
+                p.y += Math.sin(p.angle) * p.speed;
+
+                // بازگشت ذرات وقتی از صفحه خارج شوند
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+
+                // رسم ذره
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'yellow';
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        // بررسی وضعیت ثبت‌نام کاربر
+        if (!localStorage.getItem('isRegistered')) {
+            // اگر ثبت‌نام نکرده بود، هدایت به صفحه ثبت‌نام
+            window.location.href = 'register.html';
+        }
+    </script>
+  <script>
+    // اسکریپت باز و بسته شدن منوی موبایل
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+
+</html>

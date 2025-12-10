@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نوبل‌تست |  صفحه اصلی</title>
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Loader -->
+<div id="loader">
+    <div class="loader-logo">
+        <div class="logo">نوبل‌تست</div>
+      <p>در حال بارگذاری...</p>
+    </div>
+    <div class="spinner"></div>
+  </div>
+  <!-- ناوبری بالا -->
+  <header class="navbar">
+    <div class="logo">نوبل‌تست</div>
+    <nav class="nav-links">
+      <a class="active">خانه</a>
+      <a href="./azmon.html">آزمون‌ها</a>
+      <a href="./about.html">درباره ما</a>
+    </nav>
+    <div class="auth-buttons">
+      <a href="#" class="login">خرید اشتراک</a>
+      <a href="./login.html" class="signup" target="_blank">ثبت‌نام / ورود</a>
+    </div>
+
+    <!-- دکمه منو برای موبایل -->
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
+    </div>
+  </header>
+
+  <!-- منوی موبایل -->
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a class="active">خانه</a>
+    <a href="./azmon.html">آزمون‌ها</a>
+    <a href="./about.html">درباره ما</a>
+    <a href="./login.html" target="_blank">ثبت‌نام / ورود</a>
+    <a href="#">خرید اشتراک</a>
+  </div>
+
+  <!-- بخش اصلی -->
+  <main class="hero">
+    <div class="hero-content">
+      <h1>به <span>نوبل‌تست</span> خوش آمدید</h1>
+      <p>
+        پلتفرمی برای سنجش مهارت‌ها و دانش شما در موضوعات مختلف.  
+        با آزمون‌های متنوع و تحلیل دقیق عملکرد، سطح خود را بسنجید و پیشرفت کنید.
+      </p>
+      <a href="./azmon.html" class="cta">شروع کن</a>
+    </div>
+  </main>
+  <section class="social-section">
+    <h2>ما را در شبکه‌های اجتماعی دنبال کنید</h2>
+    <div class="social-buttons">
+      <a href="#" class="social-btn whatsapp" title="واتساپ" aria-label="WhatsApp">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp Logo">
+      </a>
+      <a href="#" class="social-btn telegram" title="تلگرام" aria-label="Telegram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram Logo">
+      </a>
+      <a href="#" class="social-btn instagram" title="اینستاگرام" aria-label="Instagram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram Logo">
+      </a>
+    </div>
+  </section>
+  
+  
+  <!-- فوتر -->
+  <footer>
+    <p>© ۲۰۲۵ نوبل‌تست - همه حقوق محفوظ است.</p>
+  </footer>
+
+  <script>
+    // اسکریپت باز و بسته شدن منوی موبایل
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+  </script>
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.classList.add("hidden");
+      }, 2000); // بعد از 1 ثانیه لودینگ محو میشه
+    });
+  </script>
+  
+</body>
+</html>

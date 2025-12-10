@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ثبت‌نام / ورود</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main style="max-width:600px;margin:40px auto;padding:20px;">
+    <h2>ثبت‌نام</h2>
+    <form id="registerForm">
+      <label>نام</label><input name="name" required>
+      <label>ایمیل</label><input name="email" type="email" required>
+      <label>رمز</label><input name="password" type="password" required>
+      <button type="submit" class="btn-primary">ثبت‌نام</button>
+      <p id="regResult" class="muted"></p>
+    </form>
+
+    <hr style="margin:24px 0">
+
+    <h2>ورود</h2>
+    <form id="loginForm">
+      <label>ایمیل</label><input name="email" type="email" required>
+      <label>رمز</label><input name="password" type="password" required>
+      <button type="submit" class="btn-primary">ورود</button>
+      <p id="loginResult" class="muted"></p>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('registerForm')?.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const res = await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+      const j = await res.json();
+      document.getElementById('regResult').textContent = res.ok ? 'ثبت‌نام موفق' : (j.error||'خطا');
+    });
+    document.getElementById('loginForm')?.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const res = await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+      const j = await res.json();
+      document.getElementById('loginResult').textContent = res.ok ? 'ورود موفق' : (j.error||'خطا');
+    });
+  </script>
+</body>
+</html>

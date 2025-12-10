@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="fa">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OrkidiqPlay — خانه</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader">
+    <div class="loader-inner">
+      <div class="loader-title">OrkidiqPlay</div>
+      <div class="spinner"></div>
+      <div class="loader-text">در حال بارگیری...</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">OrkidiqPlay</div>
+      <nav class="main-nav">
+        <a href="#">خانه</a>
+        <a href="#online">بازی‌های آنلاین</a>
+        <a href="#games">بازی‌ها</a>
+        <a href="#">درباره ما</a>
+        <a href="login/login.html">ورود / ثبت نام</a>
+      </nav>
+      <button class="menu-btn" aria-label="باز کردن منو">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content container">
+        <h1>به OrkidiqPlay خوش آمدید</h1>
+        <p>مرجع بهترین بازی‌های آنلاین — نسخه‌های اندروید و ویندوز. وارد دنیای گرافیکی و جذاب ما شوید.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#online">بازی‌های آنلاین</a>
+          <a class="btn ghost" href="#games">دانلود بازی‌ها</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Online Games -->
+    <section id="online" class="section">
+      <div class="container">
+        <h2>بخش بازی‌های آنلاین</h2>
+        <p class="muted">لیست سریع بازی‌های آنلاین گرافیکی — قابل بازی در مرورگر</p>
+
+        <div class="grid games-grid">
+          <article class="game-card">
+            <div class="thumb"><img src="./bgg.png" alt="Night 100" width="350" height="150"></div>
+            <h3>Night 100 <mark>BETA</mark></h3>
+            <p>بازی داستانی شب صد ام نسخه بتا</p>
+            <div class="tags"><span>ویندوز</span><span>دو بعدی</span><span>اکشن</span><span>داستانی</span></div>
+            <a class="btn small" href="night100/darkness.html" target="_blank">شروع بازی</a>
+          </article>
+
+          <article class="game-card">
+            <div class="thumb"><img src="./adamkruner.png" alt="Admak RunnerX" width="350" height="150"></div>
+            <h3>Admak RunnerX</h3>
+            <p>دویدن، پرش و جمع‌آوری امتیازها.</p>
+            <div class="tags"><span>ویندوز</span><span>دو بعدی</span><span>چالشی</span></div>
+            <a class="btn small" href="adamak/temple.html" target="_blank">شروع بازی</a>
+          </article>
+
+          <article class="game-card">
+            <div class="thumb"><img src="./carbgg.png" alt="car 2d" width="350" height="150"></div>
+            <h3>Road Racer</h3>
+            <p>سبقت بگیر، گاز بده، امتیاز بگیر.</p>
+            <div class="tags"><span>ویندوز</span><span>دو بعدی</span><span>ماشینی</span></div>
+            <a class="btn small" href="car/car2d.html" target="_blank">شروع بازی</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section id="games" class="section pb-large">
+      <div class="container">
+        <h2>دانلود بازی‌ها</h2>
+        <p class="muted">نسخه‌ها برای اندروید و ویندوز</p>
+        <div class="split">
+          <div class="card os-card">
+            <h3>اندروید</h3>
+            <p>نسخه APK — حجم کم، نصب امن.</p>
+            <a class="btn small" target="_blank" href="games/android.html">رفتن</a>
+          </div>
+
+          <div class="card os-card">
+            <h3>ویندوز</h3>
+            <p>نسخه EXE / Installer — اجرا روی ویندوز 10/11.</p>
+            <a class="btn small" target="_blank" href="games/window.html">رفتن</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <strong>OrkidiqPlay</strong> — همهٔ حقوق محفوظ است.</p>
+      <small class="muted">تماس: armannqshbndy54@gmail.com</small>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Loader
+    setTimeout(() => {
+      document.querySelector('.loader').classList.add('loaded');
+    }, 5000);
+
+    // Mobile Menu
+    const btn = document.querySelector('.menu-btn');
+    const nav = document.querySelector('.main-nav');
+    btn?.addEventListener('click', () => nav.classList.toggle('open'));
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const nav = document.querySelector('.main-nav');
+      const userData = JSON.parse(localStorage.getItem('user'));
+
+      if (userData && nav) {
+        nav.innerHTML = `
+          <a href="#">خانه</a>
+          <a href="#online">بازی‌های آنلاین</a>
+          <a href="#games">بازی‌ها</a>
+          <a href="#">درباره ما</a>
+          <div class="user-menu" style="position:relative; display:inline-block;">
+            <span class="user-button" style="cursor:pointer;">👤 ${userData.username}</span>
+            <div class="user-dropdown" style="display:none; position:absolute; right:0; background:rgba(0,0,0,0.9); padding:10px; border-radius:8px;">
+              <a href="login/panel.html" style="color:#fff; text-decoration:none; display:block; margin-bottom:5px;">پنل کاربری</a>
+              <a href="#" id="logoutBtn" style="color:#fff; text-decoration:none; display:block;">خروج</a>
+            </div>
+          </div>`;
+
+        const userButton = nav.querySelector('.user-button');
+        const userDropdown = nav.querySelector('.user-dropdown');
+
+        userButton.addEventListener('click', () => {
+          userDropdown.style.display = userDropdown.style.display === 'none' ? 'block' : 'none';
+        });
+
+        nav.querySelector('#logoutBtn').addEventListener('click', e => {
+          e.preventDefault();
+          localStorage.removeItem('user');
+          location.reload();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
